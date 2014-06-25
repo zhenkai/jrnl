@@ -97,10 +97,10 @@
 <div class="section" id="notepad-on-windows">
 <h3>Notepad++ on Windows<a class="headerlink" href="#notepad-on-windows" title="Permalink to this headline">¶</a></h3>
 <p>To set <a class="reference external" href="http://notepad-plus-plus.org/">Notepad++</a> as your editor, edit the jrnl config file (<tt class="docutils literal"><span class="pre">.jrnl_config</span></tt>) like this:</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;editor&quot;</span><span class="o">:</span> <span class="s2">&quot;C:\\Program Files (x86)\\Notepad++\\notepad++.exe -multiInst&quot;</span><span class="p">,</span>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;editor&quot;</span><span class="o">:</span> <span class="s2">&quot;C:\\Program Files (x86)\\Notepad++\\notepad++.exe -multiInst -nosession&quot;</span><span class="p">,</span>
 </pre></div>
 </div>
-<p>The double backslashes are needed so jrnl can read the file path correctly. The <tt class="docutils literal"><span class="pre">-multiInst</span></tt> option will cause jrnl to open its own Notepad++ window.</p>
+<p>The double backslashes are needed so jrnl can read the file path correctly. The <tt class="docutils literal"><span class="pre">-multiInst</span> <span class="pre">-nosession</span></tt> options will cause jrnl to open its own Notepad++ window.</p>
 </div>
 </div>
 </div>
