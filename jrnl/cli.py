@@ -41,8 +41,8 @@ def parse_args(args=None):
     exporting = parser.add_argument_group('Export / Import', 'Options for transmogrifying your journal')
     exporting.add_argument('--short', dest='short', action="store_true", help='Show only titles or line containing the search tags')
     exporting.add_argument('--tags', dest='tags', action="store_true", help='Returns a list of all tags and number of occurences')
-    exporting.add_argument('--export', metavar='TYPE', dest='export', help='Export your journal.  Options: json, text, markdown', default=False, const=None)
-    exporting.add_argument('-o', metavar='OUTPUT', dest='output', help='The output of the file can be provided when using with --export', default=False, const=None)
+    exporting.add_argument('--export', metavar='TYPE', dest='export', choices=['text','txt','markdown','md','json'], help='Export your journal. TYPE can be json, markdown, or text.', default=False, const=None)
+    exporting.add_argument('-o', metavar='OUTPUT', dest='output', help='Optionally specifies output file when using --export. If OUTPUT is a directory, exports each entry into an individual file instead.', default=False, const=None)
     exporting.add_argument('--encrypt', metavar='FILENAME', dest='encrypt', help='Encrypts your existing journal with a new password', nargs='?', default=False, const=None)
     exporting.add_argument('--decrypt', metavar='FILENAME', dest='decrypt', help='Decrypts your journal and stores it in plain text', nargs='?', default=False, const=None)
     exporting.add_argument('--edit', dest='edit', help='Opens your editor to edit the selected entries.', action="store_true")
@@ -172,7 +172,11 @@ def run(manual_args=None):
         elif config['editor']:
             raw = util.get_text_from_editor(config)
         else:
-            raw = util.py23_read("[Compose Entry; " + _exit_multiline_code + " to finish writing]\n")
+            try:
+                raw = util.py23_read("[Compose Entry; " + _exit_multiline_code + " to finish writing]\n")
+            except KeyboardInterrupt:
+                util.prompt("[Entry NOT saved to journal.]")
+                sys.exit(0)
         if raw:
             args.text = [raw]
         else:

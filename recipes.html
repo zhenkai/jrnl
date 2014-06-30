@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>FAQ &mdash; jrnl 1.8.4 documentation</title>
+    <title>FAQ &mdash; jrnl 1.8.5 documentation</title>
     
     <link rel="stylesheet" href="_static/css/jrnl.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.8.4',
+        VERSION:     '1.8.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="jrnl 1.8.4 documentation" href="index.html" />
+    <link rel="top" title="jrnl 1.8.5 documentation" href="index.html" />
     <link rel="prev" title="Advanced Usage" href="advanced.html" />
      
     <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -66,6 +66,35 @@
 <div class="highlight-python"><pre>expr $(jrnl --export text | wc -w) / $(jrnl --short | wc -l)</pre>
 </div>
 <p>This will first get the total number of words in the journal and divide it by the number of entries (this works because <tt class="docutils literal"><span class="pre">jrnl</span> <span class="pre">--short</span></tt> will print exactly one line per entry).</p>
+</div>
+<div class="section" id="importing-older-files">
+<h3>Importing older files<a class="headerlink" href="#importing-older-files" title="Permalink to this headline">¶</a></h3>
+<p>If you want to import a file as an entry to jrnl, you can just do <tt class="docutils literal"><span class="pre">jrnl</span> <span class="pre">&lt;</span> <span class="pre">entry.ext</span></tt>. But what if you want the modification date of the file to be the date of the entry in jrnl? Try this</p>
+<div class="highlight-python"><pre>echo `stat -f %Sm -t '%d %b %Y at %H:%M: ' entry.txt` `cat entry.txt` | jrnl</pre>
+</div>
+<p>The first part will format the modification date of <tt class="docutils literal"><span class="pre">entry.txt</span></tt>, and then combine it with the contents of the file before piping it to jrnl. If you do that often, consider creating a function in your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> or <tt class="docutils literal"><span class="pre">.bash_profile</span></tt></p>
+<div class="highlight-python"><pre>jrnlimport () {
+    echo `stat -f %Sm -t '%d %b %Y at %H:%M: ' $1` `cat $1` | jrnl
+}</pre>
+</div>
+</div>
+<div class="section" id="using-templates">
+<h3>Using templates<a class="headerlink" href="#using-templates" title="Permalink to this headline">¶</a></h3>
+<p>Say you always want to use the same template for creating new entries. If you have an <a class="reference internal" href="advanced.html"><em>external editor</em></a> set up, you can use this</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">jrnl</span> <span class="o">&lt;</span> <span class="n">my_template</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">jrnl</span> <span class="o">-</span><span class="mi">1</span> <span class="o">--</span><span class="n">edit</span>
+</pre></div>
+</div>
+<p>Another nice solution that allows you to define individual prompts comes from <a class="reference external" href="https://github.com/maebert/jrnl/issues/194#issuecomment-47402869">Jacobo de Vera</a></p>
+<div class="highlight-python"><pre>function log_question()
+{
+   echo $1
+   read
+   jrnl today: ${1}. $REPLY
+}
+log_question 'What did I achieve today?'
+log_question 'What did I make progress with?'</pre>
+</div>
 </div>
 </div>
 <div class="section" id="external-editors">
@@ -124,6 +153,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#co-occurrence-of-tags">Co-occurrence of tags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#combining-filters">Combining filters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importing-older-files">Importing older files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-templates">Using templates</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#external-editors">External editors</a><ul>
