@@ -73,27 +73,28 @@
 <div class="highlight-python"><pre>echo `stat -f %Sm -t '%d %b %Y at %H:%M: ' entry.txt` `cat entry.txt` | jrnl</pre>
 </div>
 <p>The first part will format the modification date of <tt class="docutils literal"><span class="pre">entry.txt</span></tt>, and then combine it with the contents of the file before piping it to jrnl. If you do that often, consider creating a function in your <tt class="docutils literal"><span class="pre">.bashrc</span></tt> or <tt class="docutils literal"><span class="pre">.bash_profile</span></tt></p>
-<div class="highlight-python"><pre>jrnlimport () {
-    echo `stat -f %Sm -t '%d %b %Y at %H:%M: ' $1` `cat $1` | jrnl
-}</pre>
+<div class="highlight-sh"><div class="highlight"><pre>jrnlimport <span class="o">()</span> <span class="o">{</span>
+    <span class="nb">echo</span> <span class="sb">`</span>stat -f %Sm -t <span class="s1">&#39;%d %b %Y at %H:%M: &#39;</span> <span class="nv">$1</span><span class="sb">`</span> <span class="sb">`</span>cat <span class="nv">$1</span><span class="sb">`</span> | jrnl
+<span class="o">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="using-templates">
 <h3>Using templates<a class="headerlink" href="#using-templates" title="Permalink to this headline">¶</a></h3>
 <p>Say you always want to use the same template for creating new entries. If you have an <a class="reference internal" href="advanced.html"><em>external editor</em></a> set up, you can use this</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">jrnl</span> <span class="o">&lt;</span> <span class="n">my_template</span><span class="o">.</span><span class="n">txt</span>
-<span class="n">jrnl</span> <span class="o">-</span><span class="mi">1</span> <span class="o">--</span><span class="n">edit</span>
-</pre></div>
+<div class="highlight-python"><pre>jrnl &lt; my_template.txt
+$ jrnl -1 --edit</pre>
 </div>
-<p>Another nice solution that allows you to define individual prompts comes from <a class="reference external" href="https://github.com/maebert/jrnl/issues/194#issuecomment-47402869">Jacobo de Vera</a></p>
-<div class="highlight-python"><pre>function log_question()
-{
-   echo $1
-   read
-   jrnl today: ${1}. $REPLY
-}
-log_question 'What did I achieve today?'
-log_question 'What did I make progress with?'</pre>
+<p>Another nice solution that allows you to define individual prompts comes from <a class="reference external" href="https://github.com/maebert/jrnl/issues/194#issuecomment-47402869">Jacobo de Vera</a>:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="k">function </span>log_question<span class="o">()</span>
+<span class="o">{</span>
+   <span class="nb">echo</span> <span class="nv">$1</span>
+   <span class="nb">read</span>
+<span class="nb">   </span>jrnl today: <span class="k">${</span><span class="nv">1</span><span class="k">}</span>. <span class="nv">$REPLY</span>
+<span class="o">}</span>
+log_question <span class="s1">&#39;What did I achieve today?&#39;</span>
+log_question <span class="s1">&#39;What did I make progress with?&#39;</span>
+</pre></div>
 </div>
 </div>
 </div>
