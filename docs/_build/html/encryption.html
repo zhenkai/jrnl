@@ -62,7 +62,7 @@
 <div class="section" id="a-note-on-security">
 <h2>A note on security<a class="headerlink" href="#a-note-on-security" title="Permalink to this headline">¶</a></h2>
 <p>While jrnl follows best practises, true security is an illusion. Specifically, jrnl will leave traces in your memory and your shell history &#8211; it&#8217;s meant to keep journals secure in transit, for example when storing it on an <a class="reference external" href="http://techcrunch.com/2014/04/09/condoleezza-rice-joins-dropboxs-board/">untrusted</a> services such as Dropbox. If you&#8217;re concerned about security, disable history logging for journal in your <tt class="docutils literal"><span class="pre">.bashrc</span></tt></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">HISTINGNORE</span><span class="o">=</span><span class="s">&quot;jrnl *&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">HISTIGNORE</span><span class="o">=</span><span class="s">&quot;jrnl *&quot;</span>
 </pre></div>
 </div>
 </div>
