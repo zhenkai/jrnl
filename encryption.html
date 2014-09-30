@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Encryption &mdash; jrnl 1.9.5 documentation</title>
+    <title>Encryption &mdash; jrnl 1.9.6 documentation</title>
     
     <link rel="stylesheet" href="_static/css/jrnl.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.9.5',
+        VERSION:     '1.9.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="jrnl 1.9.5 documentation" href="index.html" />
+    <link rel="top" title="jrnl 1.9.6 documentation" href="index.html" />
     <link rel="next" title="Import and Export" href="export.html" />
     <link rel="prev" title="Basic Usage" href="usage.html" />
      
@@ -64,6 +64,10 @@
 <p>While jrnl follows best practises, true security is an illusion. Specifically, jrnl will leave traces in your memory and your shell history &#8211; it&#8217;s meant to keep journals secure in transit, for example when storing it on an <a class="reference external" href="http://techcrunch.com/2014/04/09/condoleezza-rice-joins-dropboxs-board/">untrusted</a> services such as Dropbox. If you&#8217;re concerned about security, disable history logging for journal in your <tt class="docutils literal"><span class="pre">.bashrc</span></tt></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">HISTIGNORE</span><span class="o">=</span><span class="s">&quot;jrnl *&quot;</span>
 </pre></div>
+</div>
+<p>If you are using zsh instead of bash, you can get the same behaviour adding this to your <tt class="docutils literal"><span class="pre">zshrc</span></tt></p>
+<div class="highlight-python"><pre>setopt HIST_IGNORE_SPACE
+alias jrnl=" jrnl"</pre>
 </div>
 </div>
 <div class="section" id="manual-decryption">
