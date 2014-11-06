@@ -79,11 +79,11 @@ def prompt(msg):
 
 def py23_input(msg=""):
     prompt(msg)
-    return STDIN.readline().strip()
+    return u(STDIN.readline()).strip()
 
 def py23_read(msg=""):
     prompt(msg)
-    return STDIN.read()
+    return u(STDIN.read())
 
 def yesno(prompt, default=True):
     prompt = prompt.strip() + (" [Y/n]" if default else " [y/N]")
@@ -116,7 +116,7 @@ def load_and_fix_json(json_path):
             sys.exit(1)
 
 def get_text_from_editor(config, template=""):
-    tmpfile = os.path.join(tempfile.mktemp(prefix="jrnl"))
+    _, tmpfile = os.path.join(tempfile.mkstemp(prefix="jrnl", text=True, suffix=".txt"))
     with codecs.open(tmpfile, 'w', "utf-8") as f:
         if template:
             f.write(template)

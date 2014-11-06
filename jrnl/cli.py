@@ -156,9 +156,25 @@ def run(manual_args=None):
         config.update(journal_conf)
     else:  # But also just give them a string to point to the journal file
         config['journal'] = journal_conf
+
+    if config['journal'] is None:
+        util.prompt("You have not specified a journal. Either provide a default journal in your config file, or specify one of your journals on the command line.")
+        sys.exit(1)
+
     config['journal'] = os.path.expanduser(os.path.expandvars(config['journal']))
     touch_journal(config['journal'])
     mode_compose, mode_export = guess_mode(args, config)
+
+    # open journal file or folder
+    if os.path.isdir(config['journal']):
+        if config['journal'].strip("/").endswith(".dayone") or \
+           "entries" in os.listdir(config['journal']):
+            journal = DayOneJournal.DayOne(**config)
+        else:
+            util.prompt("[Error: {0} is a directory, but doesn't seem to be a DayOne journal either.".format(config['journal']))
+            sys.exit(1)
+    else:
+        journal = Journal.Journal(journal_name, **config)
 
     # How to quit writing?
     if "win32" in sys.platform:
@@ -182,17 +198,6 @@ def run(manual_args=None):
             args.text = [raw]
         else:
             mode_compose = False
-
-    # open journal file or folder
-    if os.path.isdir(config['journal']):
-        if config['journal'].strip("/").endswith(".dayone") or \
-           "entries" in os.listdir(config['journal']):
-            journal = DayOneJournal.DayOne(**config)
-        else:
-            util.prompt("[Error: {0} is a directory, but doesn't seem to be a DayOne journal either.".format(config['journal']))
-            sys.exit(1)
-    else:
-        journal = Journal.Journal(journal_name, **config)
 
     # Writing mode
     if mode_compose:
@@ -259,7 +264,7 @@ def run(manual_args=None):
         if num_deleted:
             prompts.append("{0} {1} deleted".format(num_deleted, "entry" if num_deleted == 1 else "entries"))
         if num_edited:
-            prompts.append("{0} {1} modified".format(num_edited, "entry" if num_deleted == 1 else "entries"))
+            prompts.append("{0} {1} modified".format(num_edited, "entry" if num_edited == 1 else "entries"))
         if prompts:
             util.prompt("[{0}]".format(", ".join(prompts).capitalize()))
         journal.entries += other_entries
