@@ -242,7 +242,7 @@ class Journal(object):
         raw = raw.replace('\\n ', '\n').replace('\\n', '\n')
         starred = False
         # Split raw text into title and body
-        sep = re.search("\n|[\?!.]+ +\n?", raw)
+        sep = re.search(ur"\n|[\?!.。！？]+ *\n?", raw, re.UNICODE)
         title, body = (raw[:sep.end()], raw[sep.end():]) if sep else (raw, "")
         starred = False
         if not date:
